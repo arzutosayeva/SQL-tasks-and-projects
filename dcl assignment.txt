@@ -1,0 +1,118 @@
+create table Advisor(
+Advisor_Id number primary key,
+Advisor_Name varchar2(20)
+);
+
+create table student(
+S_Id number,
+S_name varchar2(20),
+Advisor_Id number,
+constraint fk_ad_mr_r foreign key (Advisor_Id) references Advisor (Advisor_Id));
+insert into Advisor values (201,'TED');
+insert into Advisor values (302,'William');
+insert into Advisor values (192,'Tom');
+insert into Advisor values (243,'Diego');
+insert into student values (140105006,'Ayaz',302);
+insert into student values (140105016,'Aytac',243);
+insert into student values (140105004,'Emin',201);
+insert into student values (120105004,'Tural',null);
+--a--
+select  a.advisor_name, s.s_id, s.s_name from advisor a inner join
+student s
+on 
+s.advisor_id=a.advisor_id;--Inner Join
+--b--
+select a.advisor_name,s.s_id,s.s_name from advisor a
+natural join
+student s;--natural join
+--c--
+select a.advisor_name,s.s_id,s.s_name from advisor a
+left outer join  
+student s
+on
+a.advisor_id=s.advisor_id;--left outer join
+select * from student;
+
+
+--a--
+ALTER SESSION SET "_ORACLE_SCRIPT"=TRUE;
+CREATE USER test1998 IDENTIFIED BY  beu1998;
+--b--
+GRANT create session , create table, create user to test1998;
+--c--
+GRANT UNLIMITED TABLESPACE TO test1998;
+--d--
+grant select , update ,delete
+on advisor
+to test1998;
+--e--
+grant update (s_name)
+on student
+to test1998;
+--f--
+ALTER SESSION SET "_ORACLE_SCRIPT"=TRUE;
+create user test1999 identified by beu1999;
+--g--
+GRANT create session , create table, create user to test1998
+with admin option;
+
+grant create session to test1999;
+--h--
+grant select, insert
+on advisor
+to test1998
+with grant option;
+
+grant select
+on ielts.advisor
+to test1999;
+
+
+
+
+create table student(
+student_id number,
+s_name varchar2(20),
+s_surname varchar2(20),
+s_age number,
+gpa number);
+insert into student values (101001,'Rafail','Balabeyov',20,89);
+insert into student values (101002,'Rauf','Asadov',23,null);
+insert into student values (101003,'Turan','Mahmudov',21,85);
+insert into student values (101004,'Ilyas','Ilyasov',22,null);
+insert into student values (101005,'Emin','Nasibov',21,87);
+insert into student values (101006,'Aytac','Dadashova',20,93);
+
+--a--
+select lower(s_name),student_id
+from student;
+--b--
+select substr(s_name,1,4) from
+student;
+--c--
+select instr(s_surname,'a')
+from student
+where s_surname='Asadov';
+--d--
+select replace(s_name,'a','b')
+from student;
+--e--
+select s_name  || ' ' || s_surname as "full name"
+from student;
+--f--
+select student_id,s_name,s_surname,s_age,gpa
+from student
+order by s_name asc;
+--g--
+select student_id,s_name,s_surname,s_age,gpa
+from student
+where s_name in ('Turan','Ilyas') ;
+--h--
+select student_id,s_name,s_surname,s_age,gpa
+from student
+where s_name like 'R%';
+--i--
+select student_id,s_name,s_surname,s_age,gpa
+from student
+where s_name like '___n';
+
