@@ -1,0 +1,77 @@
+--a--
+create table advisors(
+advisor_id number(20)
+constraint adv_id primary key,
+advisor_name varchar(20) not null,
+advisor_address varchar2(20));
+--a--
+create table student(
+student_id number(20)
+constraint s_id_pk primary key,
+s_advisor_id number not null,
+student_name varchar2(20) not null,
+gpa number not null check (gpa>80),
+constraint ad_s_id_fk foreign key(s_advisor_id)
+references advisors(advisor_id));
+select * from  student;
+select * from advisors;
+--b--
+alter table student
+add(student_surname varchar2(20));
+--a--
+INSERT INTO advisors VALUES(101,'Javid','Baku');
+INSERT INTO advisors VALUES(102,'Ali','Sumgait');
+INSERT INTO advisors VALUES(103,'Samir','Ganja');
+select * from advisors;
+INSERT INTO student VALUES(160101014,101,'Baba',85,'Samadli');
+select * from student;
+insert into student values(160105017,102,'Emin',90,null);
+insert into student values(160105027,102,'Fatima',85,'Nasibova');
+insert into student values(160101007,103,'Nicat',87,'Mansimov');
+select * from student;
+--c--
+alter table student
+rename column GPA
+TO
+Student_Gpa;
+--d--
+alter table advisors
+modify(ADVISOR_ADDRESS VARCHAR(25));
+ALTER TABLE ADVISORS
+RENAME COLUMN ADVISOR_ADDRESS
+TO
+Address;
+--f--
+alter table student
+rename to students;
+select * from students;
+--h--
+update advisors
+set address='Baku'
+where advisor_name='Ali';
+select * from advisors;
+--i--
+update students
+set student_surname='Aliyev'
+where student_surname is null;
+select * from students;
+--g--
+create table student_copy(
+as
+select * from students
+where Student_Gpa>85);
+--e--
+alter table students
+drop(Student_Gpa);
+--j--
+delete from students
+where student_id=160105027;
+--k--
+delete from students
+where student_id=160101007;
+--l--
+alter table advisors
+modify(address varchar(50) not null);
+select * from user_constraints;
+alter table advisors
+drop constraint SYS_C0010056;
