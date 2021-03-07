@@ -1,0 +1,67 @@
+create table Employees(
+Role_e varchar2(20),
+Name_e varchar2(20),
+Building varchar2(20),
+Years number);
+insert into employees values(&Role_e,&name_e,&building,&years);
+select * from employees;
+--a--
+select min(years)
+from employees
+group by role_e;
+--b--
+select count(*)
+from employees
+group by building;
+--c--
+select count(*)
+from employees
+where role_e='Artist';
+--d--
+select count(*)
+from employees
+group by role_e;
+--e--
+select sum(years)
+from employees
+where role_e='Engineer';
+--f--
+select avg(years)
+from employees
+group by role_e;
+--g--
+select max(years)-min(years)
+from employees
+ group by role_e;
+ 
+ create table equipments(
+ order_ID number,
+ order_name varchar2(20),
+ order_date date,
+ purch_amount number,
+ customer_id number);
+insert into equipments values(&order_id,&order_name,&order_date,&purch_amount,&custmore_id);
+select * from equipments;
+update equipments
+set customer_id=44
+where order_id=1002;
+
+select * from equipments;
+delete equipments
+where order_id=1003;
+
+--a--
+select sum(purch_amount)
+from equipments;
+--b--
+select min(purch_amount)
+from equipments
+where customer_id between 50 and 100
+group by customer_id,order_date
+having min(purch_amount)>250
+order by order_date desc;
+--c--
+select max(order_date) from equipments;
+--d--
+select round(avg(purch_amount),2)
+from equipments;
