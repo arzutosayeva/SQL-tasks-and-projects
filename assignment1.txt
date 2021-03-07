@@ -1,0 +1,45 @@
+--1ST
+create table student(
+student_ID number,
+S_Name varchar2(20),
+S_Surname varchar2(20),
+S_Age number,
+Gpa number);
+insert into student values(150101011,'Adil','Abdurrazakli',20,89);
+insert into student values(150105024,'Baba','Semedli',23,null);
+insert into student values(150105020,'Fatima','Nasibova',21,85);
+insert into student values(150105005,'Emin','Alizade',22,null);
+insert into student values(150105011,'Rauf','Refizade',21,87);
+select * from student;
+--2ND
+
+alter table  student
+add (Student_Address varchar2(50));
+select * from student;
+--3RD
+alter table student
+RENAME column Student_ID
+to
+telebe_nomresi;
+--4TH
+alter table student
+modify(S_surname varchar2(25));
+--5TH
+alter table student
+drop(Student_Address);
+--6TH
+alter table student
+rename to telebeler;
+select * from telebeler;
+--7TH
+update  telebeler
+set S_Age=21
+where telebe_nomresi=150105005;
+--8TH
+delete from telebeler
+where telebe_nomresi=150105011;
+--9TH
+drop table telebeler;
+select * from recyclebin;
+FLASHBACK TABLE "BIN$C0+IfyZXSLuCsHivzzNYqg==$0" TO BEFORE DROP;
+SELECT * from telebeler;
