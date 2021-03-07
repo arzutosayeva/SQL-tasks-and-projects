@@ -1,0 +1,82 @@
+--1--
+create table Department(
+Dep_id number Primary key,
+Dep_name varchar2(20) not null);
+Create table Employee(
+Emp_id number primary key,
+Emp_name varchar2(20) not null,
+Emp_surname varchar2(20) not null,
+Emp_salary number not null check(Emp_salary>=200),
+D_id number not null,
+constraint fk_emp_id foreign key(D_id)
+references Department(Dep_id),
+Hire_date date);
+insert into Department values (1,'IT');
+insert into Department values (2,'HR');
+insert into Department values (3,'Finance');
+insert into Employee values (101001,'Ali','Aliyev',300,1,'01-01-2013');
+insert into Employee values (101002,'Senan','Ahmadov',400,2,'13-11-2014');
+insert into Employee values (101003,'Celal','Quliyev',250,1,'22-04-2015');
+insert into Employee values (101004,'Aydan','Mammadli',350,3,null);
+insert into Employee values (101005,'Asif','Qurbanov',400,1,'18-10-2013');
+--2--
+select * from employee;
+select upper(emp_name) || ' ' || upper(emp_surname) as "FULLNAME" from employee;
+--3--
+select emp_surname ,replace(emp_surname,'i','b') from employee;
+--4--
+select emp_name,instr(emp_name,'a')from employee where emp_salary  between 270 and 300;
+--5--
+select emp_surname,substr(emp_surname,1,4) from employee;
+--6--
+select distinct emp_salary from employee;
+--8--
+select * from employee
+where to_char(Hire_date,'YYYY')='2013';
+--7--
+select * from employee
+where emp_surname like 'A%ov';
+--9--
+select length(emp_name) from employee
+where emp_salary between 300 and 400;
+--10--
+select * from employee
+order by emp_salary desc;
+--11--
+select Hire_date,nvl(Hire_date,sysdate) from employee;
+--12--
+select emp_salary + (emp_salary * 50/100) 
+from employee
+where  to_char(Hire_date,'YYYY')='2014';
+--13--
+select Emp_name,(sysdate-hire_date)/365 from employee;
+--14--
+alter table employee
+add (Emp_Address varchar2(20));
+select * from employee;
+--15--
+update employee
+set emp_address='Moscow'
+where d_id=1;
+update employee
+set emp_address='Istanbul'
+where d_id=2;
+update employee
+set emp_address='Istanbul'
+where d_id=3;
+--16--
+select emp_name,emp_surname
+from employee
+order by emp_salary desc
+fetch first 3 rows only;
+--17--
+select Emp_name,emp_surname
+from employee
+order by (sysdate-NVL(HIRE_DATE,Sysdate))/365 desc
+fetch first 3 rows only;
+--18--
+select * from employee
+where emp_salary not between 300 and 400;
+--19--
+insert into employee values(101007,'Arzu ','Tosayeva',300,1,TO_DATE('11-10-2017 11:30:22 AM','DD-MM-YYYY HH-MI-SS AM'),'Moscow');
+select * from employee;
